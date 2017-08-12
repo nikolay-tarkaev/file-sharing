@@ -1,0 +1,62 @@
+.files-list td {
+	vertical-align: middle !important;
+}
+.files-list {
+	text-align: center !important;
+}
+.files-list label {
+	color: #47718f;
+}
+.my_pagination a {
+	display: inline-block;
+	margin: 0 2px 0 2px;
+	border: 1px solid #ccc;
+	padding: 3px;
+	border-radius: 3px;
+	min-width: 40px;
+}
+.my_pagination a:hover {
+	text-decoration: none;
+	background: #f1f1f1;
+}
+a.current_page {
+	background: #615b70;
+	padding: 3px;
+	color: #fff;
+	font-weight: bold;
+}
+a.current_page:hover {
+	background: #0f0870;
+}
+.my_pagination {
+	margin: 50px 0 50px 0;
+	font-size: 18px;
+	text-align: center;
+}
+.posts {
+	border: 10px solid #fff;
+	background: #bfe0d1;
+	box-shadow: 0 0 1px #ccc;
+	padding: 20px;
+	border-radius: 20px;
+}
+.posts .well{
+	height: 110px;
+	overflow: auto;
+	padding: 3px;
+	word-wrap: break-word;
+	text-align: justify;
+}
+.name_file {
+	height: 45px;
+	word-wrap: break-word;
+	overflow: auto;
+}
+.bottom_file{
+	height: 35px;
+}
+.delete_result {
+	padding: 10px;
+	text-align: center;
+	color: #bd8080;
+}
