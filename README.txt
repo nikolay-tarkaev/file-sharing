@@ -7,3 +7,4 @@
 7. Версия PHP 5.5.0 или выше.
 
 Пример: upload.tarkaev.pp.ua
+
