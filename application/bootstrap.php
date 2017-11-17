@@ -24,6 +24,10 @@ require_once 'core/controller.php';
 require_once 'classes/autoloader_classes.php'; // Автоматическая загрузка классов из "application/classes"
 new autoloader_classes;
 
+// Собираем статистику посещений
+$getStat = new visitor_statistics;
+$getStat->saveStat();
+
 
 
 require_once 'core/route.php';

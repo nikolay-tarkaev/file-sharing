@@ -1,17 +1,18 @@
 <?php
 
-class Controller_Main extends Controller
+class controller_main extends Controller
 {
 	function __construct()
 	{
-		$this->model = new Model_Files();
+		$this->model = new Files();
 		$this->view = new View();
+        $this->template = "default.php";
 	}
 
 	function action_index()
 	{	
 		$count_files = $this->model->count();
-		$limit = 6;
+		$limit = 5;
 		$count_page = ceil($count_files / $limit);
 		
 		if(isset($_GET['page'])){
@@ -31,21 +32,30 @@ class Controller_Main extends Controller
 		$data['count'] = $count_files;
 	    $data['posts'] = $this->model->get_files($limit, $offset);
 		$data['pagination'] = $pagination;
-		$this->view->generate('main_view.php', 'template_view.php', $data);
+		$this->view->generate('main_view.php', $this->template, $data);
 	}
 	
 	function action_ajax()
 	{	
 		if(isset($_FILES['file_upload'])){
-	
-			$file_upload_name = htmlspecialchars(trim($_POST['file_name']));
-			$file_upload_passw = htmlspecialchars(trim($_POST['file_passw']));
-			$file_upload_description = htmlspecialchars(trim($_POST['file_description']));
+            
+            $filtration = new filtration_input_data;
+            
+			$file_upload_name = $filtration->str_data($_POST['file_name']);
+			$file_upload_passw = $filtration->str_data($_POST['file_passw']);
+			$file_upload_description = $filtration->str_data($_POST['file_description']);
 			$file_upload = $_FILES['file_upload'];
+            $uploaded_by_user = NULL;
+            $date_upload = date("d.m.Y H:i:s");
+            
+            if(isset($_SESSION['auth'])){
+                $uploaded_by_user = $_SESSION['auth']['login'];
+            }
+            
 			
 			$unknown_error = array('error' => '1', 'info' => 'Неизвестная ошибка! Попробуйте ещё раз');
 			
-			$upload_file_form = new upload_file_form;
+			$upload_file_form = new check_upload_file_form;
 			
 			if(!$check_error = $upload_file_form->check($file_upload_name, $file_upload_passw, $file_upload)){
 				echo json_encode($unknown_error);
@@ -93,7 +103,9 @@ class Controller_Main extends Controller
 													 'file_passw' => $file_upload_passw,
 													 'file_number' => $new_number,
 													 'file_extension' => $file_type,
-													 'file_size' => $file_size));
+													 'file_size' => $file_size,
+                                                     'uploaded_by_user' => $uploaded_by_user,
+                                                     'date_upload' => $date_upload));
 													 
 			echo json_encode(array('error' => '0', 'info' => 'Файл сохранен'));
 			
@@ -101,21 +113,40 @@ class Controller_Main extends Controller
 		elseif($_GET['delete_file']){
 			$file_id = htmlspecialchars(trim($_GET['file_id']));
 			$file_passw = htmlspecialchars(trim($_GET['file_passw']));
-			if(empty($file_passw)){
-				echo json_encode(array('error' => '1', 'info' => 'Введите пароль'));
-				exit;
-			}
-			$delete_query = $this->model->delete_file($file_id, $file_passw);
-				
-			if($delete_query == "1"){
-				echo json_encode(array('error' => '0', 'info' => ''));
-			}
-			elseif($delete_query == "0"){
-				echo json_encode(array('error' => '1', 'info' => 'Неправильный пароль'));
-			}
+            
+            if(isset($_GET['admin'])){
+                if(isset($_SESSION['auth'])){
+                    if($_SESSION['auth']['status'] == "admin"){
+                        $delete_query = $this->model->delete_file($file_id, $file_passw, $admin = 1);
+                        echo json_encode(array('error' => '0', 'info' => ''));
+                    }
+                    else{
+                        Route::ErrorPage404();
+                    }
+                }
+                else{
+                    Route::ErrorPage404();
+                }
+            }
+            else{
+                if(empty($file_passw)){
+                    echo json_encode(array('error' => '1', 'info' => 'Введите пароль'));
+                    exit;
+                }
+                $delete_query = $this->model->delete_file($file_id, $file_passw);
+
+                if($delete_query == "1"){
+                    echo json_encode(array('error' => '0', 'info' => ''));
+                }
+                elseif($delete_query == "0"){
+                    echo json_encode(array('error' => '1', 'info' => 'Неправильный пароль'));
+                }
+            }
+            
+			
 		}
 		else {
-			header("location: http://".$_SERVER['HTTP_HOST']);
+			Route::ErrorPage404();
 		}
 	}
 }

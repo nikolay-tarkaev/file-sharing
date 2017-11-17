@@ -1,0 +1,62 @@
+.stat_table {
+	text-align: center;
+}
+.stat_title {
+	font-weight: bold;
+	background: #404040;
+	color: #fff;
+}
+.stat_title td {
+	padding: 3px;
+}
+.stat_table tr{
+	border-top: 1px solid #ccc;
+}
+.stat_table tr:hover{
+	cursor: pointer;
+	background: #adebad;
+}
+.stat_title:hover {
+	cursor: default !important;
+	background: #404040 !important;
+}
+.stat_title_1 {
+	width: 15%;
+}
+.stat_title_2 {
+	width: 40%;
+}
+.stat_title_3 {
+	width: 15%;
+}
+.stat_title_4 {
+	width: 15%;
+}
+.stat_title_5 {
+	width: 15%;
+}
+
+
+
+
+
+.visitor_stat {
+    background: #fff;
+    padding: 0;
+    margin-bottom: 10px;
+    box-shadow: 4px 4px 20px #999;
+    border-top: 1px solid #777;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #888;
+}
+.visitor_stat div {
+    border-left: 1px solid #777;
+    border-bottom: 1px solid #777;
+    padding: 5px;
+}
+.visitor_stat:hover div {
+    background: #adebad;
+}
+.stat_url {
+    background: #ccebd6;
+}

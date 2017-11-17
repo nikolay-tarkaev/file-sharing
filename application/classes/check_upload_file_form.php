@@ -4,7 +4,7 @@
  * @Note Проверка данных из формы form_upload_file
  */
 
-    class upload_file_form{
+    class check_upload_file_form{
         
         public function check($name, $passw, $file){
 			if(empty($name) or empty($passw)){

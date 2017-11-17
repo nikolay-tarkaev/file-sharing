@@ -143,11 +143,11 @@
                                                                 <input type="text" name="user_login" class="form-control" placeholder="Логин" role="menuitem" id="login_input" /></li>
                                                             <li role="presentation">
                                                                 <input type="password" name="user_password" class="form-control" placeholder="Пароль" role="menuitem" id="password_input" /></li>
-                                                            <li role="presentation">
-                                                                <input type="checkbox" name="" role="menuitem" />&nbsp;&nbsp;&nbsp;Запомнить меня</li>
-                                                            <li role="presentation" class="divider"></li>
+                                                            <!-- <li role="presentation">
+                                                                <input type="checkbox" name="" role="menuitem" />&nbsp;&nbsp;&nbsp;Запомнить меня</li> -->
                                                             <li role="presentation">
                                                                 <button type="submit" class="btn btn-info" name="login_submit" role="menuitem">Войти <span class="glyphicon glyphicon-log-in"></span></button></li>
+                                                            <li role="presentation" class="divider"></li>
                                                         </form>
                                                         <li role="presentation"><a class="btn btn-default" href="<?php echo $host; ?>registration" role="menuitem">Регистрация</a></li>
                                                     </ul>
@@ -167,16 +167,26 @@
             <div class="footer copyright">
                 <div class="container">
                     <div class="col-md-6">
-                        <p><?php echo "© " . date('Y') . " - All Rights with " . $_SERVER['HTTP_HOST']; ?></p>
+                        <!-- <p><?php echo "© " . date('Y') . " - All Rights with " . $_SERVER['HTTP_HOST']; ?></p> -->
+                        <p><?php echo date('Y') . " - " . $_SERVER['HTTP_HOST']; ?></p>
                     </div>
                     <div class="col-md-6">
                         <ul class="bottom_ul">
                             <li><a href="<?php echo $host; ?>"><?php echo $_SERVER['HTTP_HOST']; ?></a></li>
-                            <li><a href="#">About site</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Faq's</a></li>
-                            <li><a href="#">Contact us</a></li>
-                            <li><a href="#">Site Map</a></li>
+                            <li><a href="<?php echo $host; ?>aboutsite">О сайте</a></li>
+                            <?php
+                                if(isset($_SESSION['auth'])){
+                                    ?>
+                                        <li><a href="<?php echo $host; ?>logout">Выход</a></li>
+                                    <?php
+                                }
+                                else {
+                                    ?>
+                                        <li><a href="<?php echo $host; ?>login">Войти</a></li>
+                                        <li><a href="<?php echo $host; ?>registration">Регистрация</a></li>
+                                    <?php
+                                }
+                            ?>
                         </ul>
                     </div>
                 </div>

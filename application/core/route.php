@@ -6,7 +6,7 @@ class Route
 	static function start()
 	{
 		// контроллер и действие по умолчанию
-		$controller_name = 'Main';
+		$controller_name = 'main';
 		$action_name = 'index';
 		
 		$separate_method_GET = explode('?', $_SERVER['REQUEST_URI']);
@@ -25,8 +25,8 @@ class Route
 		}
 
 		// добавляем префиксы
-		$model_name = 'Model_'.$controller_name;
-		$controller_name = 'Controller_'.$controller_name;
+		$model_name = $controller_name;
+		$controller_name = 'controller_'.$controller_name;
 		$action_name = 'action_'.$action_name;
 
 		// подцепляем файл с классом модели (файла модели может и не быть)
@@ -61,7 +61,6 @@ class Route
 		}
 		else
 		{
-			// здесь также разумнее было бы кинуть исключение
 			Route::ErrorPage404();
 		}
 	
